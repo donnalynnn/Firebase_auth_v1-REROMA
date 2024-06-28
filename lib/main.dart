@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
       routerConfig: GlobalRouter.I.router,
       title: 'Stateful Changes Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 255, 115, 22)),
         useMaterial3: true,
       ),
     );

@@ -1,6 +1,8 @@
+import 'package:firebase_auth_v1/src/screens/auth/login.screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+import '../../routing/router.dart';
 import '/src/controllers/auth_controller.dart';
 import '/src/dialogs/waiting_dialog.dart';
 
@@ -43,24 +45,61 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     password2Fn.dispose();
   }
 
+  bool _isHovering = false;
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[400],
-      appBar: AppBar(
-        centerTitle: true,
-        automaticallyImplyLeading: false,
-        title: const Text("Register"),
-      ),
+      backgroundColor: const Color.fromARGB(255, 219, 216, 216),
+      
       bottomNavigationBar: SafeArea(
         child: Container(
           margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
           height: 52,
-          child: ElevatedButton(
-            onPressed: () {
-              onSubmit();
-            },
-            child: const Text("Register"),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Flexible(
+                child: ElevatedButton(
+                  onPressed: () {
+                    onSubmit();
+                  },
+                  // ignore: sort_child_properties_last
+                  child: const Text("Register"),
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color.fromARGB(255, 255, 115, 22),
+                      foregroundColor: Colors.white,
+                      textStyle: const TextStyle(fontSize: 18),
+                      minimumSize: const Size(double.infinity, 60),
+                ),
+                ),
+              ),
+
+              // const SizedBox(height: 20),
+
+              Center(
+                child: Flexible(
+                  child: MouseRegion(
+                    onEnter: (_) => setState(() => _isHovering = true),
+                    onExit: (_) => setState(() => _isHovering = false),
+                    child: GestureDetector(
+                      onTap: () {
+                        GlobalRouter.I.router.go(LoginScreen.route);
+                      },
+                      child: Text(
+                        "Already have an account? Login here",
+                        style: TextStyle(
+                          color: _isHovering? const Color.fromARGB(255, 255, 115, 22): Colors.black
+                        ),
+                      ),
+                    ),
+                    ),
+                
+                  ),
+              ),
+            ],
           ),
         ),
       ),
@@ -70,8 +109,18 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           child: Form(
             key: formKey,
             child: Column(
-              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.max,
               children: [
+                const Text(
+                        "Registration", // Title
+                        style: TextStyle(
+                          fontSize: 70,
+                          fontWeight: FontWeight.bold,
+                          color: Color.fromARGB(255, 255, 115, 22), // Deep orange color
+                        ),
+                      ),
+                const SizedBox(height: 30),
                 Flexible(
                   child: TextFormField(
                     decoration: decoration.copyWith(
@@ -212,10 +261,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         borderSide: const BorderSide(color: Colors.black87, width: 1),
       ),
       focusedBorder: _baseBorder.copyWith(
-        borderSide: const BorderSide(color: Colors.blueAccent, width: 1),
+        borderSide: const BorderSide(color: Color.fromARGB(255, 255, 193, 68), width: 1),
       ),
       errorBorder: _baseBorder.copyWith(
-        borderSide: const BorderSide(color: Colors.deepOrangeAccent, width: 1),
+        borderSide: const BorderSide(color: Color.fromARGB(255, 255, 64, 64), width: 1),
       )
       
       );
